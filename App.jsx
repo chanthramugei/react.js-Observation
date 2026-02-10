@@ -1,36 +1,34 @@
-import React ,{ useState } from 'react'
+import React ,{useEffect,useState}from 'react'
 
-function Calculator() {
-  const[num1,setNum1]=useState("");
-  const[num2,setNum2]=useState("");
-
-  const a=Number(num1);
-  const b=Number(num2);
+function Fakestoreapi() {
+    const[products,setProducts]=useState([])
+    useEffect(()=>{
+        fetch('https://fakestoreapi.com/products/1')
+        .then(res=>res.json())
+        .then((data)=>setProducts(data))
+    },[])
   return (
-    <div>
-      <h1 style={{textDecoration:"underline"}}>Calculator</h1>
-      <input type="number" placeholder='Enter the first value'
-      onChange={(e)=>setNum1(e.target.value)}/>
-      <input type="number" placeholder='Enter the second value'
-      onChange={(e)=>setNum2(e.target.value)}/>
-      <div style={{height:"200px",
-        width:"300px",
-        border:"3px inset black",
-        marginLeft:"260px",
-        marginTop:"20px",
-        backgroundColor:"lightblue",
-        textAlign:"left"}}>
-          <h3>Result</h3>
-          <p><strong>Addition :</strong>{a+b}</p>
-          <p><strong>Subtraction :</strong>{a-b}</p>
-          <p><strong>Multiplication :</strong>{a*b}</p>
-          <p><strong>Division :</strong>
-          {b==0 ?"can't divide by zero":a/b}
-          </p>
-          
-        </div>
+    <div style={Styles.Card}>
+        <img src={products.image} alt="" style={Styles.img}></img>
+        <h1>{products.title}</h1>
+        <p><b>Price:</b>${products.price}</p>
+      
     </div>
   )
 }
+const Styles={
+    Card:{
+        width:"300px",
+        border:"1px solid #ccc",
+        padding:"15px",
+        borderRadius:"8px",
+        margin:"20px auto"
+    },
+    img:{
+      width:"100%",
+      height:"200px",
+      objectfit:"contain"
+    }
+}
 
-export default Calculator
+export default Fakestoreapi
